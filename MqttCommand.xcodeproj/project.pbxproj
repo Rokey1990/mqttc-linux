@@ -8,6 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		21DAB2741CBDE55C0070242D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB2731CBDE55C0070242D /* main.m */; };
+		21DAB2901CBDE5790070242D /* MQTTConnectClient.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB27F1CBDE5790070242D /* MQTTConnectClient.c */; };
+		21DAB2911CBDE5790070242D /* MQTTConnectServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB2801CBDE5790070242D /* MQTTConnectServer.c */; };
+		21DAB2921CBDE5790070242D /* MQTTDeserializePublish.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB2811CBDE5790070242D /* MQTTDeserializePublish.c */; };
+		21DAB2931CBDE5790070242D /* MQTTFormat.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB2821CBDE5790070242D /* MQTTFormat.c */; };
+		21DAB2941CBDE5790070242D /* MQTTPacket.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB2841CBDE5790070242D /* MQTTPacket.c */; };
+		21DAB2951CBDE5790070242D /* MQTTSerializePublish.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB2871CBDE5790070242D /* MQTTSerializePublish.c */; };
+		21DAB2961CBDE5790070242D /* MQTTSubscribeClient.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB2891CBDE5790070242D /* MQTTSubscribeClient.c */; };
+		21DAB2971CBDE5790070242D /* MQTTSubscribeServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB28A1CBDE5790070242D /* MQTTSubscribeServer.c */; };
+		21DAB2981CBDE5790070242D /* MQTTUnsubscribeClient.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB28C1CBDE5790070242D /* MQTTUnsubscribeClient.c */; };
+		21DAB2991CBDE5790070242D /* MQTTUnsubscribeServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB28D1CBDE5790070242D /* MQTTUnsubscribeServer.c */; };
+		21DAB29D1CBE10600070242D /* AJBMqttClient.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB29A1CBE10600070242D /* AJBMqttClient.c */; };
+		21DAB2A81CBE1A710070242D /* MQTTLinux.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB2A31CBE1A710070242D /* MQTTLinux.c */; };
+		21DAB2A91CBE1A710070242D /* MQTTClient.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB2A51CBE1A710070242D /* MQTTClient.c */; };
+		21DAB2AD1CBE1CD10070242D /* MQTTCC3200.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB2AB1CBE1CD10070242D /* MQTTCC3200.c */; };
+		21DAB2B01CBE20BB0070242D /* stdoutsub.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB2AF1CBE20BB0070242D /* stdoutsub.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +40,34 @@
 /* Begin PBXFileReference section */
 		21DAB2701CBDE55B0070242D /* MqttCommand */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MqttCommand; sourceTree = BUILT_PRODUCTS_DIR; };
 		21DAB2731CBDE55C0070242D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		21DAB27E1CBDE5790070242D /* MQTTConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTConnect.h; sourceTree = "<group>"; };
+		21DAB27F1CBDE5790070242D /* MQTTConnectClient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTConnectClient.c; sourceTree = "<group>"; };
+		21DAB2801CBDE5790070242D /* MQTTConnectServer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTConnectServer.c; sourceTree = "<group>"; };
+		21DAB2811CBDE5790070242D /* MQTTDeserializePublish.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTDeserializePublish.c; sourceTree = "<group>"; };
+		21DAB2821CBDE5790070242D /* MQTTFormat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTFormat.c; sourceTree = "<group>"; };
+		21DAB2831CBDE5790070242D /* MQTTFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTFormat.h; sourceTree = "<group>"; };
+		21DAB2841CBDE5790070242D /* MQTTPacket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTPacket.c; sourceTree = "<group>"; };
+		21DAB2851CBDE5790070242D /* MQTTPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTPacket.h; sourceTree = "<group>"; };
+		21DAB2861CBDE5790070242D /* MQTTPublish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTPublish.h; sourceTree = "<group>"; };
+		21DAB2871CBDE5790070242D /* MQTTSerializePublish.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTSerializePublish.c; sourceTree = "<group>"; };
+		21DAB2881CBDE5790070242D /* MQTTSubscribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTSubscribe.h; sourceTree = "<group>"; };
+		21DAB2891CBDE5790070242D /* MQTTSubscribeClient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTSubscribeClient.c; sourceTree = "<group>"; };
+		21DAB28A1CBDE5790070242D /* MQTTSubscribeServer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTSubscribeServer.c; sourceTree = "<group>"; };
+		21DAB28B1CBDE5790070242D /* MQTTUnsubscribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTUnsubscribe.h; sourceTree = "<group>"; };
+		21DAB28C1CBDE5790070242D /* MQTTUnsubscribeClient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTUnsubscribeClient.c; sourceTree = "<group>"; };
+		21DAB28D1CBDE5790070242D /* MQTTUnsubscribeServer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTUnsubscribeServer.c; sourceTree = "<group>"; };
+		21DAB28E1CBDE5790070242D /* StackTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackTrace.h; sourceTree = "<group>"; };
+		21DAB29A1CBE10600070242D /* AJBMqttClient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AJBMqttClient.c; sourceTree = "<group>"; };
+		21DAB29B1CBE10600070242D /* MqttDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MqttDefines.h; sourceTree = "<group>"; };
+		21DAB29C1CBE10600070242D /* AJBMqttClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJBMqttClient.h; sourceTree = "<group>"; };
+		21DAB2A31CBE1A710070242D /* MQTTLinux.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTLinux.c; sourceTree = "<group>"; };
+		21DAB2A41CBE1A710070242D /* MQTTLinux.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTLinux.h; sourceTree = "<group>"; };
+		21DAB2A51CBE1A710070242D /* MQTTClient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTClient.c; sourceTree = "<group>"; };
+		21DAB2A61CBE1A710070242D /* MQTTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTClient.h; sourceTree = "<group>"; };
+		21DAB2AB1CBE1CD10070242D /* MQTTCC3200.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MQTTCC3200.c; sourceTree = "<group>"; };
+		21DAB2AC1CBE1CD10070242D /* MQTTCC3200.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTCC3200.h; sourceTree = "<group>"; };
+		21DAB2AE1CBE1D0A0070242D /* PlatformDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlatformDefines.h; sourceTree = "<group>"; };
+		21DAB2AF1CBE20BB0070242D /* stdoutsub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stdoutsub.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +101,76 @@
 			isa = PBXGroup;
 			children = (
 				21DAB2731CBDE55C0070242D /* main.m */,
+				21DAB27A1CBDE5790070242D /* test */,
+				21DAB27D1CBDE5790070242D /* src */,
 			);
 			path = MqttCommand;
+			sourceTree = "<group>";
+		};
+		21DAB27A1CBDE5790070242D /* test */ = {
+			isa = PBXGroup;
+			children = (
+				21DAB2AF1CBE20BB0070242D /* stdoutsub.c */,
+				21DAB29B1CBE10600070242D /* MqttDefines.h */,
+				21DAB29C1CBE10600070242D /* AJBMqttClient.h */,
+				21DAB29A1CBE10600070242D /* AJBMqttClient.c */,
+			);
+			path = test;
+			sourceTree = "<group>";
+		};
+		21DAB27D1CBDE5790070242D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				21DAB29E1CBE1A710070242D /* MQTTClient */,
+				21DAB27E1CBDE5790070242D /* MQTTConnect.h */,
+				21DAB27F1CBDE5790070242D /* MQTTConnectClient.c */,
+				21DAB2801CBDE5790070242D /* MQTTConnectServer.c */,
+				21DAB2811CBDE5790070242D /* MQTTDeserializePublish.c */,
+				21DAB2821CBDE5790070242D /* MQTTFormat.c */,
+				21DAB2831CBDE5790070242D /* MQTTFormat.h */,
+				21DAB2841CBDE5790070242D /* MQTTPacket.c */,
+				21DAB2851CBDE5790070242D /* MQTTPacket.h */,
+				21DAB2861CBDE5790070242D /* MQTTPublish.h */,
+				21DAB2871CBDE5790070242D /* MQTTSerializePublish.c */,
+				21DAB2881CBDE5790070242D /* MQTTSubscribe.h */,
+				21DAB2891CBDE5790070242D /* MQTTSubscribeClient.c */,
+				21DAB28A1CBDE5790070242D /* MQTTSubscribeServer.c */,
+				21DAB28B1CBDE5790070242D /* MQTTUnsubscribe.h */,
+				21DAB28C1CBDE5790070242D /* MQTTUnsubscribeClient.c */,
+				21DAB28D1CBDE5790070242D /* MQTTUnsubscribeServer.c */,
+				21DAB28E1CBDE5790070242D /* StackTrace.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		21DAB29E1CBE1A710070242D /* MQTTClient */ = {
+			isa = PBXGroup;
+			children = (
+				21DAB2AA1CBE1CD10070242D /* cc3200 */,
+				21DAB2A21CBE1A710070242D /* linux */,
+				21DAB2AE1CBE1D0A0070242D /* PlatformDefines.h */,
+				21DAB2A61CBE1A710070242D /* MQTTClient.h */,
+				21DAB2A51CBE1A710070242D /* MQTTClient.c */,
+			);
+			path = MQTTClient;
+			sourceTree = "<group>";
+		};
+		21DAB2A21CBE1A710070242D /* linux */ = {
+			isa = PBXGroup;
+			children = (
+				21DAB2A41CBE1A710070242D /* MQTTLinux.h */,
+				21DAB2A31CBE1A710070242D /* MQTTLinux.c */,
+			);
+			path = linux;
+			sourceTree = "<group>";
+		};
+		21DAB2AA1CBE1CD10070242D /* cc3200 */ = {
+			isa = PBXGroup;
+			children = (
+				21DAB2AC1CBE1CD10070242D /* MQTTCC3200.h */,
+				21DAB2AB1CBE1CD10070242D /* MQTTCC3200.c */,
+			);
+			path = cc3200;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +229,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21DAB2A81CBE1A710070242D /* MQTTLinux.c in Sources */,
 				21DAB2741CBDE55C0070242D /* main.m in Sources */,
+				21DAB2A91CBE1A710070242D /* MQTTClient.c in Sources */,
+				21DAB2921CBDE5790070242D /* MQTTDeserializePublish.c in Sources */,
+				21DAB2B01CBE20BB0070242D /* stdoutsub.c in Sources */,
+				21DAB2941CBDE5790070242D /* MQTTPacket.c in Sources */,
+				21DAB2951CBDE5790070242D /* MQTTSerializePublish.c in Sources */,
+				21DAB2961CBDE5790070242D /* MQTTSubscribeClient.c in Sources */,
+				21DAB2981CBDE5790070242D /* MQTTUnsubscribeClient.c in Sources */,
+				21DAB2901CBDE5790070242D /* MQTTConnectClient.c in Sources */,
+				21DAB29D1CBE10600070242D /* AJBMqttClient.c in Sources */,
+				21DAB2971CBDE5790070242D /* MQTTSubscribeServer.c in Sources */,
+				21DAB2931CBDE5790070242D /* MQTTFormat.c in Sources */,
+				21DAB2991CBDE5790070242D /* MQTTUnsubscribeServer.c in Sources */,
+				21DAB2AD1CBE1CD10070242D /* MQTTCC3200.c in Sources */,
+				21DAB2911CBDE5790070242D /* MQTTConnectServer.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +334,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = "-Wno-shorten-64-to-32";
 			};
 			name = Debug;
 		};
@@ -215,6 +342,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = "-Wno-shorten-64-to-32";
 			};
 			name = Release;
 		};
