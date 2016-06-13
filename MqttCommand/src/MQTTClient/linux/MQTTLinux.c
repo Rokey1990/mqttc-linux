@@ -19,6 +19,7 @@
 #include "MQTTLinux.h"
 
 #if PLATFORM_LINUX==1
+
 char expired(Timer* timer)
 {
 	struct timeval now, res;
@@ -84,9 +85,13 @@ int linux_read(Network* n, unsigned char* buffer, int len, int timeout_ms)
 				bytes = -1;
 				break;
 			}
+            else{
+                printf("recv error: other reasons --- %d\n",errno);
+                return 0;
+            }
 		}
-        else if (rc ==-1){
-            return -1;
+        else if (rc ==0){
+            return 0;
         }
 		else
 			bytes += rc;
@@ -120,6 +125,7 @@ void NewNetwork(Network* n)
 	n->mqttread = linux_read;
 	n->mqttwrite = linux_write;
 	n->disconnect = linux_disconnect;
+    pthread_mutex_init(&n->mutex, NULL);
 }
 
 
@@ -164,8 +170,31 @@ int ConnectNetwork(Network* n, char* addr, int port)
 		n->my_socket = socket(family, type, 0);
 		if (n->my_socket != -1)
 		{
-			int opt = 1;			
+//            struct timeval cTimeOut = {5,0};
+//            if(setsockopt(n->my_socket,IPPROTO_TCP,0x20,(char *)&cTimeOut, sizeof( struct timeval))<0)
+//            {
+//                printf("hello,set connect timeout error!\n");
+//                return -1;
+//            }
 			rc = connect(n->my_socket, (struct sockaddr*)&address, sizeof(address));
+            if (rc == 0) {
+#ifdef SO_NOSIGPIPE
+                int set = 1;
+                if (setsockopt(n->my_socket, SOL_SOCKET, SO_NOSIGPIPE, &set, sizeof(set))<0) {
+                    perror("set no sigpipe error");
+                }
+#endif
+                /*
+                int bufSize = 500*1024;
+                if (setsockopt(n->my_socket, SOL_SOCKET, SO_SNDBUF, &bufSize, sizeof(bufSize))>=0) {
+                    printf("set send buffer size ------ %d\n",bufSize);
+                }
+                if (setsockopt(n->my_socket, SOL_SOCKET, SO_RCVBUF, &bufSize, sizeof(bufSize))>=0) {
+                    printf("set recevie buffer size ------ %d\n",bufSize);
+                }
+               */
+            }
+            
 		}
 	}
 

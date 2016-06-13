@@ -17,23 +17,22 @@
 #ifndef __MQTT_CLIENT_C_
 #define __MQTT_CLIENT_C_
 
-#include "MQTTPacket.h"
-#include "stdio.h"
+#include "MqttDispatcher.h"
+#include <stdio.h>
 
-#include "PlatformDefines.h"
+#include "MqttDefines.h"
+
 #if PLATFORM_LINUX == 1
 #include "MQTTLinux.h" //Platform specific implementation header file
+#include <pthread.h>
 #else
 #include "MQTTCC3200.h" //Platform specific implementation header file
 #endif
 
-#define MAX_PACKET_ID 65535
-#define MAX_MESSAGE_HANDLERS 5
 
-enum QoS { QOS0, QOS1, QOS2 };
 
 // all failure return codes must be negative
-enum returnCode { BUFFER_OVERFLOW = -2, FAILURE = -1, SUCCESS = 0 };
+enum returnCode { SOCK_ERROR = -3,BUFFER_OVERFLOW = -2, FAILURE = -1, SUCCESS = 0 };
 
 void NewTimer(Timer*);
 
@@ -63,12 +62,16 @@ typedef struct Client Client;
 
 int MQTTConnect (Client*, MQTTPacket_connectData*);
 int MQTTPublish (Client*, const char*, MQTTMessage*);
+int MQTTPublish2(Client* c, const char*, MQTTMessage*);/*异步接口*/
 int MQTTSubscribe (Client*, const char*, enum QoS, messageHandler);
+int MQTTSubscribe2 (Client*, const char*, enum QoS, messageHandler);/*异步接口*/
 int MQTTUnsubscribe (Client*, const char*);
+int MQTTUnsubscribe2 (Client*, const char*);/*异步接口*/
 int MQTTDisconnect (Client*);
 int MQTTYield (Client*, int);
 
-void setDefaultMessageHandler(Client*, messageHandler);
+//测试代码
+int getPubMessageId(char *message);
 
 void MQTTClient(Client*, Network*, unsigned int, unsigned char*, size_t, unsigned char*, size_t);
 
@@ -79,19 +82,22 @@ struct Client {
     unsigned char *buf;  
     unsigned char *readbuf; 
     unsigned int keepAliveInterval;
-    char ping_outstanding;
+    float ping_outstanding;
     int isconnected;
 
-    struct MessageHandlers
-    {
-        const char* topicFilter;
-        void (*fp) (MessageData*);
-    } messageHandlers[MAX_MESSAGE_HANDLERS];      // Message handlers are indexed by subscription topic
+//    struct MessageHandlers
+//    {
+//        const char* topicFilter;
+//        void (*fp) (MessageData*);
+//    } messageHandlers[MAX_MESSAGE_HANDLERS];      // Message handlers are indexed by subscription topic
+//    void (*defaultMessageHandler) (MessageData*);
     
-    void (*defaultMessageHandler) (MessageData*);
+    void *usedObj;
+    MqttDispatcher *dispatcher;
     
     Network* ipstack;
     Timer ping_timer;
+    
 };
 
 #define DefaultClient {0, 0, 0, 0, NULL, NULL, 0, 0, 0}

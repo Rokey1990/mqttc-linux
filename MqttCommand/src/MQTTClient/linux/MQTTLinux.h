@@ -14,8 +14,8 @@
  *    Allan Stockdill-Mander - initial API and implementation and/or initial documentation
  *******************************************************************************/
 #include "PlatformDefines.h"
-#if PLATFORM_LINUX==1
 
+#if PLATFORM_LINUX==1
 #ifndef __MQTT_LINUX_
 #define __MQTT_LINUX_
 
@@ -36,6 +36,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
+#include <pthread.h>
 
 typedef struct Timer Timer;
 
@@ -51,6 +52,9 @@ struct Network
 	int (*mqttread) (Network*, unsigned char*, int, int);
 	int (*mqttwrite) (Network*, unsigned char*, int, int);
 	void (*disconnect) (Network*);
+#if PLATFORM_LINUX == 1
+    pthread_mutex_t mutex;
+#endif
 };
 
 char expired(Timer*);
