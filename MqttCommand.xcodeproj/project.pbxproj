@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		214506A71CEAACE800EAD467 /* config.cfg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 214506A61CEAAA4300EAD467 /* config.cfg */; };
+		217657F41CF431ED00F1496D /* MqttLog.c in Sources */ = {isa = PBXBuildFile; fileRef = 217657F21CF431ED00F1496D /* MqttLog.c */; };
 		21DAB2741CBDE55C0070242D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB2731CBDE55C0070242D /* main.m */; };
 		21DAB2901CBDE5790070242D /* MQTTConnectClient.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB27F1CBDE5790070242D /* MQTTConnectClient.c */; };
 		21DAB2911CBDE5790070242D /* MQTTConnectServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 21DAB2801CBDE5790070242D /* MQTTConnectServer.c */; };
@@ -29,15 +31,19 @@
 		21DAB26E1CBDE55B0070242D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
+			dstPath = /usr/share/man/man1;
 			dstSubfolderSpec = 0;
 			files = (
+				214506A71CEAACE800EAD467 /* config.cfg in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2141D7391CE9B2390004A948 /* MqttDispatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MqttDispatcher.h; sourceTree = "<group>"; };
+		214506A61CEAAA4300EAD467 /* config.cfg */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.cfg; sourceTree = "<group>"; };
+		217657F21CF431ED00F1496D /* MqttLog.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MqttLog.c; sourceTree = "<group>"; };
 		21DAB2701CBDE55B0070242D /* MqttCommand */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MqttCommand; sourceTree = BUILT_PRODUCTS_DIR; };
 		21DAB2731CBDE55C0070242D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		21DAB27E1CBDE5790070242D /* MQTTConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTConnect.h; sourceTree = "<group>"; };
@@ -68,6 +74,8 @@
 		21DAB2AC1CBE1CD10070242D /* MQTTCC3200.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MQTTCC3200.h; sourceTree = "<group>"; };
 		21DAB2AE1CBE1D0A0070242D /* PlatformDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlatformDefines.h; sourceTree = "<group>"; };
 		21DAB2AF1CBE20BB0070242D /* stdoutsub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stdoutsub.c; sourceTree = "<group>"; };
+		21FE87421CED9F0300EA565D /* build_and_run.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_and_run.sh; sourceTree = "<group>"; };
+		21FE87431CEEA67900EA565D /* mqttc.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = mqttc.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				21DAB2731CBDE55C0070242D /* main.m */,
+				214506A61CEAAA4300EAD467 /* config.cfg */,
+				21FE87421CED9F0300EA565D /* build_and_run.sh */,
+				21FE87431CEEA67900EA565D /* mqttc.sh */,
 				21DAB27A1CBDE5790070242D /* test */,
 				21DAB27D1CBDE5790070242D /* src */,
 			);
@@ -111,7 +122,9 @@
 			isa = PBXGroup;
 			children = (
 				21DAB2AF1CBE20BB0070242D /* stdoutsub.c */,
+				217657F21CF431ED00F1496D /* MqttLog.c */,
 				21DAB29B1CBE10600070242D /* MqttDefines.h */,
+				2141D7391CE9B2390004A948 /* MqttDispatcher.h */,
 				21DAB29C1CBE10600070242D /* AJBMqttClient.h */,
 				21DAB29A1CBE10600070242D /* AJBMqttClient.c */,
 			);
@@ -235,6 +248,7 @@
 				21DAB2921CBDE5790070242D /* MQTTDeserializePublish.c in Sources */,
 				21DAB2B01CBE20BB0070242D /* stdoutsub.c in Sources */,
 				21DAB2941CBDE5790070242D /* MQTTPacket.c in Sources */,
+				217657F41CF431ED00F1496D /* MqttLog.c in Sources */,
 				21DAB2951CBDE5790070242D /* MQTTSerializePublish.c in Sources */,
 				21DAB2961CBDE5790070242D /* MQTTSubscribeClient.c in Sources */,
 				21DAB2981CBDE5790070242D /* MQTTUnsubscribeClient.c in Sources */,
@@ -365,6 +379,7 @@
 				21DAB2791CBDE55C0070242D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
