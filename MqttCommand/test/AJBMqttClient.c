@@ -531,7 +531,6 @@ void get_mqtt_opts(const char *filePath,MqttConfigure *config){
     printf("-----------------------------------------\n");
 }
 void set_disable_subscribe(const char *filePath,char *clientId,int disable){
-    printf("begin write,%s\n",filePath);
     FILE *fp = fopen(filePath, "a+");
     if (fp) {
         

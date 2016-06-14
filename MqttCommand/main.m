@@ -215,7 +215,7 @@ int main(int argc, const char * argv[]) {
 //    startClient("pub", config, dispatcher);
 //    return 0;
     if (argc == 1) {
-        config.pubCount = 10;
+        config.pubCount = 2;
         config.pubInterval_ms = 1000;
         strcpy(config.topic, "c/lukai-12345679/info");
 //        strcpy(config.topic, "c/AJBMQTTTest-Rec-liucy/info");
@@ -235,6 +235,7 @@ int main(int argc, const char * argv[]) {
         }
         
     }
+//    f64ff90e8ef57eec034d12b361a5383ff46b43e7
 
     
     /*

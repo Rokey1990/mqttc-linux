@@ -147,7 +147,7 @@ int validateHeader(MQTTHeader *header){
             break;
     }
     if (rc == FAILURE) {
-        printf("invalid header %02x\n",header->byte);
+        printf("invalid header %02x ---- %c\n",header->byte,header->byte);
     }
 
     return rc;
@@ -163,6 +163,7 @@ int readPacket(Client* c, Timer* timer)
     /* 1. read the header byte.  This has the packet type in it */
     int readrc = 0;
     int crc = FAILURE;
+    int droppedBytes = 0;
     do{
         readrc = c->ipstack->mqttread(c->ipstack, c->readbuf, 1, left_ms(timer));
         if (readrc == 0) {
@@ -177,14 +178,27 @@ int readPacket(Client* c, Timer* timer)
         if (crc==SUCCESS) {
             break;
         }
+        droppedBytes++;
         if (expired(timer)) {
             goto exit;
         }
     }while (1);
-    
+    if (droppedBytes>0) {
+        logToLocal(log_erro_path, "[MQTT RECEIVE ERROR] dropped bytes:%d",droppedBytes);
+    }
     len = 1;
     /* 2. read the remaining length.  This is variable in itself */
-    decodePacket(c, &rem_len, left_ms(timer));
+    int decrc = decodePacket(c, &rem_len, left_ms(timer));
+    if (decrc == MQTTPACKET_READ_ERROR) {
+        logToLocal(log_erro_path, "[MQTTPACKET_READ_ERROR] rem_len : %d",rem_len);
+        rc = FAILURE;
+        goto exit;
+    }
+    printf("%d ---- rem_len : %d  ",header.bits.type,rem_len);
+    for (int i =0; i<rem_len&&i<10; i++) {
+        printf("%02x-",c->readbuf[2+rem_len]);
+    }
+    printf("\n");
     len += MQTTPacket_encode(c->readbuf + 1, rem_len); /* put the original remaining length back into the buffer */
 
     /* 3. read the rest of the buffer using a callback to supply the rest of the data */
@@ -263,18 +277,20 @@ int deliverMessage(Client* c, MQTTString* topicName, MQTTMessage* message)
     int msgLen = (int)message->payloadlen;
     
     if (topicLen>MAX_TOPIC_LEN) {
-        topicLen = MAX_TOPIC_LEN - 1;
+        
         MqttLog("unknow topic name! len = %d",topicLen);
         logToLocal(log_erro_path, "unknow topic name! len = %d",topicLen);
+        topicLen = MAX_TOPIC_LEN - 1;
         return FAILURE;
     }
     else{
         memcpy(topic, topicName->lenstring.data, topicLen);
     }
     if (msgLen>MAX_CONTENT_LEN ) {
-        msgLen = MAX_CONTENT_LEN - 1;
+        
         MqttLog("unknow content ! len = %d",msgLen);
         logToLocal(log_erro_path, "unknow content ! len = %d",msgLen);
+        msgLen = MAX_CONTENT_LEN - 1;
         return FAILURE;
     }
     else{
@@ -308,7 +324,7 @@ int keepalive(Client* c)
             InitTimer(&timer);
             countdown_ms(&timer, 1000);
             int len = MQTTSerialize_pingreq(c->buf, c->buf_size);
-            MqttLog("[SEND] PINGRESP");
+            MqttLog("[SEND] PINGREQ");
             sendPacket(c, len, &timer);
 //            if (len > 0 && (rc = sendPacket(c, len, &timer)) == SUCCESS) // send the ping packet
 //                c->ping_outstanding = 0;
