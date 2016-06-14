@@ -534,7 +534,7 @@ void set_disable_subscribe(const char *filePath,char *clientId,int disable){
     FILE *fp = fopen(filePath, "a+");
     if (fp) {
         
-        fprintf(fp, "\ndisable_subscribe=%s\n",clientId);
+        fprintf(fp, "\ndisable_subscribe=%s",clientId);
         fclose(fp);
     }
 }

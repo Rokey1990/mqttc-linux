@@ -194,11 +194,7 @@ int readPacket(Client* c, Timer* timer)
         rc = FAILURE;
         goto exit;
     }
-    printf("%d ---- rem_len : %d  ",header.bits.type,rem_len);
-    for (int i =0; i<rem_len&&i<10; i++) {
-        printf("%02x-",c->readbuf[2+rem_len]);
-    }
-    printf("\n");
+   
     len += MQTTPacket_encode(c->readbuf + 1, rem_len); /* put the original remaining length back into the buffer */
 
     /* 3. read the rest of the buffer using a callback to supply the rest of the data */
@@ -229,6 +225,16 @@ int readPacket(Client* c, Timer* timer)
         rc = FAILURE;
         goto exit;
     }
+    
+    printf("%d ---- rem_len : %d  ",header.bits.type,rem_len);
+    for (int i =0; i<rem_len&&i<2; i++) {
+        printf("%02x",c->readbuf[2+i]);
+    }
+    for (int i =2; i<rem_len&&i<55; i++) {
+        printf("%c",c->readbuf[2+i]);
+    }
+    printf("\n");
+    
     rc = header.bits.type;
 exit:
     return rc;
