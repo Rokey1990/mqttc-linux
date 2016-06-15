@@ -39,7 +39,7 @@ int sendPacket(Client* c, int length, Timer* timer)
     {
         int time_left = expired(timer)?5:left_ms(timer);
         
-        rc = c->ipstack->mqttwrite(c->ipstack, &c->buf[sent], length, time_left);
+        rc = c->ipstack->mqttwrite(c->ipstack, &c->buf[sent], length - sent, time_left);
         if (rc < 0){  // there was an error writing the data
             MqttLog("[WARNING] SEND PACKET FAILED");
             break;
@@ -90,26 +90,35 @@ int decodePacket(Client* c, int* value, int timeout)
     unsigned char i;
     int multiplier = 0;
     int len = 0;
+    int rc = MQTTPACKET_READ_ERROR;
     const int MAX_NO_OF_REMAINING_LENGTH_BYTES = 4;
 
     *value = 0;
     do
     {
-        int rc = MQTTPACKET_READ_ERROR;
 
-        if (++len > MAX_NO_OF_REMAINING_LENGTH_BYTES)
+        if (len > MAX_NO_OF_REMAINING_LENGTH_BYTES)
         {
             rc = MQTTPACKET_READ_ERROR; /* bad data */
             goto exit;
         }
         rc = c->ipstack->mqttread(c->ipstack, &i, 1, timeout);
-        if (rc != 1)
+        if (rc != 1) {
+            MqttLog("%s:%d",__func__,rc);
+            if (rc == -1 && errno == EAGAIN) {
+                continue;
+            }
+            else{
+                rc = MQTTPACKET_READ_ERROR;
+            }
             goto exit;
+        }
+        len++;
         *value += (i & 127) << multiplier;
         multiplier += 7;
     } while ((i & 128) != 0);
 exit:
-    return len;
+    return rc;
 }
 
 int validateHeader(MQTTHeader *header){
@@ -164,6 +173,7 @@ int readPacket(Client* c, Timer* timer)
     int readrc = 0;
     int crc = FAILURE;
     int droppedBytes = 0;
+    
     do{
         readrc = c->ipstack->mqttread(c->ipstack, c->readbuf, 1, left_ms(timer));
         if (readrc == 0) {
@@ -178,6 +188,9 @@ int readPacket(Client* c, Timer* timer)
         if (crc==SUCCESS) {
             break;
         }
+        else{
+            exit(-1);
+        }
         droppedBytes++;
         if (expired(timer)) {
             goto exit;
@@ -191,7 +204,7 @@ int readPacket(Client* c, Timer* timer)
     int decrc = decodePacket(c, &rem_len, left_ms(timer));
     if (decrc == MQTTPACKET_READ_ERROR) {
         logToLocal(log_erro_path, "[MQTTPACKET_READ_ERROR] rem_len : %d",rem_len);
-        rc = FAILURE;
+        rc = ERR_SOCKET_RECV;
         goto exit;
     }
    
@@ -203,7 +216,7 @@ int readPacket(Client* c, Timer* timer)
     int retryTimes = 0;
     
     int readBytes = 0;
-    
+        
     while (readBytes<rem_len && retryTimes<3) {
         if (expired(timer)) {
             printf("[IMPORTANT] read packet retrying\n");
@@ -212,9 +225,16 @@ int readPacket(Client* c, Timer* timer)
         }
         else{
             leftTime = left_ms(timer);
+            leftTime = leftTime<2?2:leftTime;
         }
+        
         int length = c->ipstack->mqttread(c->ipstack, c->readbuf + len + readBytes, rem_len - readBytes, leftTime);
         if (length <= 0) {
+            MqttLog("%s:length = %d",__func__,length);
+            retryTimes = 0;
+            if (errno ==EAGAIN) {
+                continue;
+            }
             rc = FAILURE;
             goto exit;
         }
@@ -226,17 +246,19 @@ int readPacket(Client* c, Timer* timer)
         goto exit;
     }
     
-    printf("%d ---- rem_len : %d  ",header.bits.type,rem_len);
-    for (int i =0; i<rem_len&&i<2; i++) {
-        printf("%02x",c->readbuf[2+i]);
-    }
-    for (int i =2; i<rem_len&&i<55; i++) {
-        printf("%c",c->readbuf[2+i]);
-    }
-    printf("\n");
-    
+//    
+//    for (int i =0; i<rem_len&&i<55; i++) {
+//        printf("%02x-",c->readbuf[2+i]);
+//    }
+//    printf("     ");
+//    for (int i =2; i<rem_len&&i<55; i++) {
+//        printf("%c",c->readbuf[2+i]);
+//    }
+//    printf("\n");
+//    
     rc = header.bits.type;
 exit:
+    MqttLog("rc --------------- %d,%d,%d",rc,rem_len,readBytes);
     return rc;
 }
 
@@ -305,7 +327,7 @@ int deliverMessage(Client* c, MQTTString* topicName, MQTTMessage* message)
     
     topic[topicLen] = '\0';
     messageStr[msgLen] = '\0';
-    MqttLog("[RECV (%d)%s] id = %d",topicName->lenstring.len,topic,getPubMessageId(messageStr));
+//    MqttLog("[RECV (%d)%s] id = %d",topicName->lenstring.len,topic,getPubMessageId(messageStr));
     logToLocal(log_file_path,"INFO:收到消息--> topic: %s message:%s",topic,messageStr);
     if (c->dispatcher->onRecevie) {
         c->dispatcher->onRecevie(c->usedObj,topicName->lenstring.data,message->payload,(int)message->payloadlen);
@@ -360,8 +382,8 @@ int cycle(Client* c, Timer* timer)
         case CONNACK:
             MqttLog("[CONNECT result] SUCCESS");
             if (c->dispatcher->onConnect) {
-                c->dispatcher->onConnect(c->usedObj,SUCCESS);break;
-            }
+                c->dispatcher->onConnect(c->usedObj,SUCCESS);
+            }break;
         case PUBACK:
             if (c->dispatcher->onPublish) {
                 c->dispatcher->onPublish(c->usedObj,SUCCESS);

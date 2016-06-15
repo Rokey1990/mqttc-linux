@@ -80,8 +80,13 @@ int linux_read(Network* n, unsigned char* buffer, int len, int timeout_ms)
 		int rc = recv(n->my_socket, &buffer[bytes], (size_t)(len - bytes), 0);
 		if (rc == -1)
 		{
-			if (errno != ENOTCONN && errno != ECONNRESET)
+            if (errno != ENOTCONN && errno != ECONNRESET)
 			{
+                printf("recv error: errono ************************ %d,%d\n",errno,bytes);
+                if (errno == EAGAIN && bytes>0) {
+                    usleep(500);
+                    continue;
+                }
 				bytes = -1;
 				break;
 			}
@@ -107,7 +112,7 @@ int linux_write(Network* n, unsigned char* buffer, int len, int timeout_ms)
 	tv.tv_sec = 0;  /* 30 Secs Timeout */
 	tv.tv_usec = timeout_ms * 1000;  // Not init'ing this can cause strange errors
 
-	setsockopt(n->my_socket, SOL_SOCKET, SO_RCVTIMEO, (char *)&tv,sizeof(struct timeval));
+	setsockopt(n->my_socket, SOL_SOCKET, SO_SNDTIMEO, (char *)&tv,sizeof(struct timeval));
 	int	rc = write(n->my_socket, buffer, len);
 	return rc;
 }

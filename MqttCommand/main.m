@@ -215,9 +215,9 @@ int main(int argc, const char * argv[]) {
 //    startClient("pub", config, dispatcher);
 //    return 0;
     if (argc == 1) {
-        config.pubCount = 2;
-        config.pubInterval_ms = 1000;
-        strcpy(config.topic, "c/lukai-12345679/info");
+        config.pubCount = 200000;
+        config.pubInterval_ms = 10;
+        strcpy(config.topic, "c/lukai-123456790/info");
 //        strcpy(config.topic, "c/AJBMQTTTest-Rec-liucy/info");
         strcpy(log_file_path, "/tmp/mqtt.log");
         strcpy(config.host, "218.107.12.79");
