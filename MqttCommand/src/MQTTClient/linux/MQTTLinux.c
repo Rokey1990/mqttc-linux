@@ -82,7 +82,6 @@ int linux_read(Network* n, unsigned char* buffer, int len, int timeout_ms)
 		{
             if (errno != ENOTCONN && errno != ECONNRESET)
 			{
-                printf("recv error: errono ************************ %d,%d\n",errno,bytes);
                 if (errno == EAGAIN && bytes>0) {
                     usleep(500);
                     continue;

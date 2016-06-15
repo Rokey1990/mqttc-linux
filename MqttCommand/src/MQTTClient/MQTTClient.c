@@ -177,7 +177,7 @@ int readPacket(Client* c, Timer* timer)
     do{
         readrc = c->ipstack->mqttread(c->ipstack, c->readbuf, 1, left_ms(timer));
         if (readrc == 0) {
-            rc = ERR_SOCKET_RECV;
+            rc = ERR_PACKET_TYPE;
             goto exit;
         }
         else if (readrc != 1){
@@ -204,7 +204,7 @@ int readPacket(Client* c, Timer* timer)
     int decrc = decodePacket(c, &rem_len, left_ms(timer));
     if (decrc == MQTTPACKET_READ_ERROR) {
         logToLocal(log_erro_path, "[MQTTPACKET_READ_ERROR] rem_len : %d",rem_len);
-        rc = ERR_SOCKET_RECV;
+        rc = ERR_PACKET_TYPE;
         goto exit;
     }
    
@@ -245,20 +245,8 @@ int readPacket(Client* c, Timer* timer)
         rc = FAILURE;
         goto exit;
     }
-    
-//    
-//    for (int i =0; i<rem_len&&i<55; i++) {
-//        printf("%02x-",c->readbuf[2+i]);
-//    }
-//    printf("     ");
-//    for (int i =2; i<rem_len&&i<55; i++) {
-//        printf("%c",c->readbuf[2+i]);
-//    }
-//    printf("\n");
-//    
     rc = header.bits.type;
 exit:
-    MqttLog("rc --------------- %d,%d,%d",rc,rem_len,readBytes);
     return rc;
 }
 
@@ -327,7 +315,7 @@ int deliverMessage(Client* c, MQTTString* topicName, MQTTMessage* message)
     
     topic[topicLen] = '\0';
     messageStr[msgLen] = '\0';
-//    MqttLog("[RECV (%d)%s] id = %d",topicName->lenstring.len,topic,getPubMessageId(messageStr));
+    MqttLog("[RECV (%d)%s] id = %d",topicName->lenstring.len,topic,getPubMessageId(messageStr));
     logToLocal(log_file_path,"INFO:收到消息--> topic: %s message:%s",topic,messageStr);
     if (c->dispatcher->onRecevie) {
         c->dispatcher->onRecevie(c->usedObj,topicName->lenstring.data,message->payload,(int)message->payloadlen);
@@ -368,7 +356,7 @@ int cycle(Client* c, Timer* timer)
 {
     // read the socket, see what work is due
     unsigned short packet_type = readPacket(c, timer);
-    if (packet_type==ERR_SOCKET_RECV){
+    if (packet_type==ERR_PACKET_TYPE){
         return SOCK_ERROR;
     }
     else if (packet_type != PACKET_TIMEOUT) {
