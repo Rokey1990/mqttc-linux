@@ -17,17 +17,7 @@ void auto_reconnect(AJBMqttClient *client);
 
 #define MessageMake publishMessage
 
-char *errRea[4] = {"keepalive timeout","socket invalid","MQTT EXCEPTION","UNKNOWN"};
-
-//void on_messageArrived(MessageData* md)
-//{
-//    MQTTMessage* message = md->message;
-//    
-//    MqttLog("%.*s\t", md->topicName->lenstring.len, md->topicName->lenstring.data);
-//    MqttLog("%.*s----qos:%d----dup:%d", (int)message->payloadlen, (char*)message->payload,message->qos,message->dup);
-//    
-//}
-
+static char *errRea[4] = {"keepalive timeout","socket invalid","MQTT EXCEPTION","UNKNOWN"};
 
 #pragma mark - client func
 char *errReason(int errCode){

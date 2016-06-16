@@ -17,7 +17,7 @@
 #include "MqttDispatcher.h"
 
 #define PACKET_TIMEOUT          65535
-#define PACKET_BUF_SIZE         1024
+#define PACKET_BUF_SIZE         2048
 #define MAX_CLIENT_ID_LEN       128
 #define MAX_TOPIC_LEN           128
 #define MAX_CONTENT_LEN         2048
