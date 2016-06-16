@@ -104,10 +104,6 @@ MqttReturnCode mqttClient_connect(AJBMqttClient *client, char *host,int port){
     int interval = client->aliveAttr.recon_int;
     interval = interval>0?interval:1;
     int max = client->aliveAttr.recon_max;
-    
-    printf("\n*****************Client******************\n");
-    printf("%s,%16s:%d,%4d",client->clientId,host,port,client->cleanSession);
-    printf("\n*****************************************\n\n");
 
 reconnect:
     rc = ConnectNetwork(&client->n, host, port);
@@ -136,6 +132,7 @@ reconnect:
     client->isConnected = (rc==SUCCESS);
     
     if(rc == SUCCESS){
+        printf("%s,%16s:%d,%4d ----------------ok\n",client->clientId,host,port,client->cleanSession);
         reportOnline(client);
     }
     else{
@@ -519,6 +516,9 @@ void get_mqtt_opts(const char *filePath,MqttConfigure *config){
                 if(strcmp(value, config->clientid) == 0){
                     config->disable_subscribe = 1;
                 }
+            }
+            else if (strcmp(name, "count")==0){
+                config->sessionCount = atoi(value);
             }
             else{
                 

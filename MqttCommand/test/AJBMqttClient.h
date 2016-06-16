@@ -102,6 +102,7 @@ struct AJBMqttClient{
      *  获取messageid
      */
     int (*getMessageId)(struct AJBMqttClient *client);
+    MqttConfigure *config;
 };
 
 typedef struct AJBMqttClient AJBMqttClient;

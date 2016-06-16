@@ -190,10 +190,10 @@ int ConnectNetwork(Network* n, char* addr, int port)
 #endif
                 int bufSize = 500*1024;
                 if (setsockopt(n->my_socket, SOL_SOCKET, SO_SNDBUF, &bufSize, sizeof(bufSize))>=0) {
-                    printf("set send buffer size ------ %d\n",bufSize);
+//                    printf("set send buffer size ------ %d\n",bufSize);
                 }
                 if (setsockopt(n->my_socket, SOL_SOCKET, SO_RCVBUF, &bufSize, sizeof(bufSize))>=0) {
-                    printf("set recevie buffer size ------ %d\n",bufSize);
+//                    printf("set recevie buffer size ------ %d\n",bufSize);
                 }
             }
             

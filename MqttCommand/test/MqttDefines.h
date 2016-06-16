@@ -31,7 +31,7 @@
 #define MAX_KEEPALIVE_TIMEO     10          /*心跳延时允许的最大时间*/
 #define ERR_PACKET_TYPE         65534       /*网络异常时，设定PACKET_TYPE无效,设定错误id为0x1111111111111110*/
 
-#define ENABLE_LOG              1
+#define ENABLE_LOG              0
 #define ENABLE_LOG_TIMESTAMP    1
 
 /*
@@ -137,6 +137,7 @@ typedef struct {
     char log_file[64];
     char cleansession;
     
+    int sessionCount;
     int pubCount;
     int pubInterval_ms;
     int disable_subscribe;
@@ -146,6 +147,6 @@ typedef struct {
 //    int willqos;
 }MqttConfigure;
 
-#define DEFAULT_CONFIG {{1,1,0,0},20,2000,"",2,"",1883,"","","",0}
+#define DEFAULT_CONFIG {{1,1,0,0},20,2000,"",2,"",1883,"username","password","clientid","log_file",1}
 
 #endif /* AJBMqttDefines_h */
